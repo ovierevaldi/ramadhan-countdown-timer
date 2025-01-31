@@ -10,8 +10,6 @@ type TimerProp = {
   seconds: number
 };
 
-const targetSeconds = 300;
-
 type AppProp = {
   targetDate: Date
 }
