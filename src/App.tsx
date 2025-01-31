@@ -53,8 +53,8 @@ function App({ targetDate } : AppProp) {
   }
 
   return (
-    <div>
-      <div className='text-4xl m-2'>
+    <div className=''>
+      <div className='text-4xl p-2'>
         <div className='w-full'>
           <div className='flex gap-x-4 items-center justify-end w-full'>
             <select className='text-xl md:text-2xl' defaultValue={currentBahasa} onChange={(e) => changeBahasa(e.target.value as SelectedBahasa)}>
