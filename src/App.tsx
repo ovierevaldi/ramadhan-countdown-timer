@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import masjidImage from './assets/masjid.webp'
 import { BsQuestionCircle } from 'react-icons/bs';
+import ContextLanguage, { SelectedBahasa } from './libs/bahasa';
 
 type TimerProp = {
   days: number
@@ -43,6 +44,12 @@ function App({ targetDate } : AppProp) {
 
   const showTooltip = () => {
     setIsTooltipOpen(!isTooltipOpen);
+  };
+
+  const [currentBahasa, setCurrentBahasa] = useState<SelectedBahasa>('Indonesia');
+
+  const changeBahasa = (value: SelectedBahasa) => {
+    setCurrentBahasa(value);
   }
 
   return (
@@ -52,7 +59,7 @@ function App({ targetDate } : AppProp) {
       <div className='flex flex-col gap-y-6 text-center'>
         <p className='font-bold text-3xl md:text-4xl'>Ramadhan 1446 H</p>
 
-        <p className='text-2xl md:text-3xl'>Countdown:</p>
+        <p className='text-2xl md:text-3xl'>{ContextLanguage().getCountdown(currentBahasa)}</p>
 
         <div className='grid grid-cols-4 text-lg md:text-2xl gap-x-2 md:gap-x-4'>
           <p className='text-4xl md:text-6xl font-bold'>{currentTimer.days}</p>
@@ -60,25 +67,32 @@ function App({ targetDate } : AppProp) {
           <p className='text-4xl md:text-6xl font-bold'>{currentTimer.minutes}</p>
           <p className='text-4xl md:text-6xl font-bold'>{currentTimer.seconds}</p>
 
-          <p>Days</p>
-          <p>Hours</p>
-          <p>Minutes</p>
-          <p>Seconds</p>
+          <p>{ContextLanguage().getDays(currentBahasa)}</p>
+          <p>{ContextLanguage().getHours(currentBahasa)}</p>
+          <p>{ContextLanguage().getMinutes(currentBahasa)}</p>
+          <p>{ContextLanguage().getSeconds(currentBahasa)}</p>
           
         </div>
       </div>
       
       <div className='absolute top-0 right-0 text-4xl m-2'>
-        <button className='cursor-pointer' onClick={showTooltip}>
-          <BsQuestionCircle />
-        </button>
+        <div className='flex gap-x-4 items-center'>
+
+          <select className='text-xl md:text-2xl' defaultValue={currentBahasa} onChange={(e) => changeBahasa(e.target.value as SelectedBahasa)}>
+            <option value={'English'}>English</option>
+            <option value={'Indonesia'}>Indonesia</option>
+          </select>
+
+          <button className='cursor-pointer' onClick={showTooltip}>
+            <BsQuestionCircle />
+          </button>
+        </div>
         {
           isTooltipOpen && 
-          <div className='w-48 h-60 border-2 absolute -translate-x-[100%] p-2 bg-white'>
-            <p className='italic text-sm'>*Untuk wilayah Indonesia berdasarkan Informasi yang tersedia.</p>
-            <br />
+          <div className='w-48 h-60 border-2 absolute -translate-x-[25%] p-2 bg-white'>
+            <p className='italic text-sm mb-4'>*{ContextLanguage().getParagraph1(currentBahasa)}</p>
             <p className='italic text-sm'>
-            *Penetapan resmi awal Ramadan oleh pemerintah akan dikonfirmasi <br /> melalui sidang isbat yang diadakan menjelang bulan Ramadan. 
+            *{ContextLanguage().getParagraph2(currentBahasa)}
             </p>
           </div>
         }
