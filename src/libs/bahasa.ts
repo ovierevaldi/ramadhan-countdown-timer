@@ -51,7 +51,14 @@ const ContextLanguage = () => {
             return 'Penetapan resmi awal Ramadan oleh pemerintah akan dikonfirmasi melalui sidang isbat yang diadakan menjelang bulan Ramadan.'
     };
 
-    return {getCountdown, getDays, getHours, getMinutes, getSeconds, getParagraph1, getParagraph2}
+    function getCelebrationText(bahasa: SelectedBahasa){
+        if(bahasa === 'English')
+            return 'It\'s Ramadhan Time!';
+        else
+            return 'Saatnya Ramadhan!'
+    }
+
+    return {getCountdown, getDays, getHours, getMinutes, getSeconds, getParagraph1, getParagraph2, getCelebrationText}
 };
 
 export default ContextLanguage
